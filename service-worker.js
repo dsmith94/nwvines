@@ -19,15 +19,12 @@ this.addEventListener('install', event => {
 
 
 this.addEventListener('fetch', event => {
-  console.log('check fetch ');
   // request.mode = navigate isn't supported in all browsers
   // so include a check for Accept: text/html header.
-  //if (event.request.mode === 'navigate' || (event.request.method === 'GET' && event.request.headers.get('accept').includes('text/html'))) {
-  if (event.request.mode === 'navigate') {
+  if (event.request.mode === 'navigate' || (event.request.method === 'GET' && event.request.headers.get('accept').includes('text/html'))) {
         event.respondWith(
           fetch(event.request.url).catch(error => {
               // Return the offline page
-              console.log('check here');
               return caches.match(offlineUrl);
           })
     );
